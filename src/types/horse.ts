@@ -1,6 +1,9 @@
+import type { HorseColor } from '@/constants/horseColors'
+import type { HorseName } from '@/constants/horseNames'
+
 export interface Horse {
   id: number
-  name: string
   conditionScore: number
-  color: string
+  name: HorseName
+  color: HorseColor
 }
