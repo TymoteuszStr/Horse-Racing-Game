@@ -5,6 +5,9 @@ import { getRandomNr } from '@/utils.ts/getRandomNr'
 import type { Horse } from '@/types/horse'
 import { shuffleArray } from '@/utils.ts/shuffleArray'
 import raceDistances from '@/constants/raceDistances'
+import { AVERAGE_HORSE_SPEED_MPS } from '@/constants/raceConfig'
+import type { RaceRound } from '@/types/RaceRound'
+import type { RaceResult } from '@/types/RaceResult'
 
 export function useGameEngine() {
   const store = useStore()
@@ -40,8 +43,34 @@ export function useGameEngine() {
         horses: selectedHorses,
       }
     })
-
+    schedule.forEach((round) => {
+      const result = simulateRace(round)
+      console.log(`Round ${round.roundNumber} results:`, result)
+    })
     store.commit('setRaceSchedule', schedule)
   }
-  return { generateHorseList, isGameStarted, generateRaceSchedule }
+  function simulateRace(race: RaceRound): RaceResult[] {
+    const results: RaceResult[] = race.horses.map((horse: Horse) => {
+      const conditionModifier = (horse.conditionScore - 50) / 100
+      const adjustedSpeed = AVERAGE_HORSE_SPEED_MPS * (1 + conditionModifier)
+      const baseTime = race.distance / adjustedSpeed
+      const randomFactor = 1 + getRandomNr(-5, 5) / 100
+      const finalTime = baseTime * randomFactor
+
+      return {
+        horse,
+        time: parseFloat(finalTime.toFixed(2)),
+        position: 0,
+      }
+    })
+
+    results.sort((a, b) => a.time - b.time)
+
+    results.forEach((result, index) => {
+      result.position = index + 1
+    })
+
+    return results
+  }
+  return { generateHorseList, isGameStarted, generateRaceSchedule, simulateRace }
 }

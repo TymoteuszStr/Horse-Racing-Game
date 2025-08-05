@@ -1,8 +1,7 @@
-import type { RaceDistance } from '@/constants/raceDistances'
 import type { Horse } from './horse'
 
-export interface RaceRound {
+export type RaceRound = {
   roundNumber: number
-  distance: RaceDistance
+  distance: number
   horses: Horse[]
 }
