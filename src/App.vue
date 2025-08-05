@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import HorseList from './components/HorseList.vue'
 
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useGameEngine } from './composable/useGameEngine'
+import ScheduleList from './components/ScheduleList.vue'
 
+const { generateHorseList, isGameStarted } = useGameEngine()
 const store = useStore()
-const horses = computed(() => store.getters.horsesList)
-
-onMounted(() => {
-  store.dispatch('generateHorses')
-})
+const horseList = computed(() => store.getters.horseList)
+const raceSchedule = computed(() => store.getters.raceSchedule)
 </script>
 
 <template>
-  <div>
-    <HorseList :horses="horses" />
+  <div class="flex">
+    <HorseList :horseList="horseList" @generate="generateHorseList" :button-disabled="isGameStarted" />
+    <ScheduleList :raceSchedule="raceSchedule" />
   </div>
 </template>
 
