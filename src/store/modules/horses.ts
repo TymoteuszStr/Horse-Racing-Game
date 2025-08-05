@@ -22,16 +22,19 @@ const actions = {
       id: index + 1,
       name,
       color: horseColors[index],
-      conditionScore: getRandomNr(70, 100),
+      conditionScore: getRandomNr(90, 100),
     }))
 
     commit('setHorses', horses)
   },
 }
-const getters = {}
+const getters = {
+  horsesList(state: HorsesState): Horse[] {
+    return state.horses
+  },
+}
 
 const module: Module<HorsesState, RootState> = {
-  namespaced: true,
   state,
   mutations,
   actions,

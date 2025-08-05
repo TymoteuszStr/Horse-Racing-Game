@@ -1,11 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import HorseList from './components/HorseList.vue'
+
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
+const horses = computed(() => store.getters.horsesList)
+
+onMounted(() => {
+  store.dispatch('generateHorses')
+})
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div>
+    <HorseList :horses="horses" />
+  </div>
 </template>
 
 <style scoped></style>
