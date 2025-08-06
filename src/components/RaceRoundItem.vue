@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { RaceRound } from '@/types/RaceRound'
-import { faHorse } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import HorseDisplay from '@/components/HorseDisplay.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -35,10 +34,7 @@ const expanded = ref(props.initialExpanded)
           :key="horse.id"
           class="flex justify-between items-center px-3 py-2 rounded-lg transition-colors duration-150 hover:bg-gray-50"
         >
-          <span class="truncate text-gray-800 flex items-center gap-2">
-            {{ horse.name }}
-            <font-awesome-icon :icon="faHorse" class="w-5 h-5" :style="{ color: horse.color }" />
-          </span>
+          <HorseDisplay :horse="horse" />
         </li>
       </ul>
     </transition>

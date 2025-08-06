@@ -2,9 +2,9 @@
 import { computed, onMounted, ref } from 'vue'
 import type { Horse } from '@/types/horse'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faHorse } from '@fortawesome/free-solid-svg-icons'
 import { faMedal } from '@fortawesome/free-solid-svg-icons'
 import type { RaceResult } from '@/types/RaceResult'
+import HorseDisplay from './HorseDisplay.vue'
 interface Props {
   result: RaceResult
   horse: Horse
@@ -38,7 +38,6 @@ const durationMs = computed(() => props.result.time * 1000 * (defaultSpeedMultip
 const horseStyle = computed(() => ({
   transform: started.value ? `translateX(${offset.value}px)` : 'translateX(0)',
   transition: `transform ${durationMs.value}ms linear`,
-  border: `1px solid ${props.result.horse.color}`,
   backgroundColor: 'white',
   color: props.result.horse.color,
 }))
@@ -70,20 +69,24 @@ function onTransitionEnd() {
       </span>
     </div>
     <div class="track" ref="trackRef">
-      <div class="horse" :style="horseStyle" @transitionend="onTransitionEnd" ref="horseRef">
-        <font-awesome-icon
-          :icon="faHorse"
-          class="w-5 h-5 text-gray-800"
-          :style="{ color: horse.color }"
-        />
-        {{ horse.name }}
+      <div
+        class="horse shadow-md"
+        :style="horseStyle"
+        @transitionend="onTransitionEnd"
+        ref="horseRef"
+      >
+        <HorseDisplay :horse="props.horse" />
       </div>
       <transition name="medal-pop">
         <div
-          v-if="isFinished && props.result.position && props.result.position <= 3"
+          v-if="isFinished"
           class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full bg-white shadow-md flex items-center gap-2 font-bold text-sm"
         >
-          <font-awesome-icon :icon="faMedal" :style="medalColor" />
+          <font-awesome-icon
+            v-if="props.result.position && props.result.position <= 3"
+            :icon="faMedal"
+            :style="medalColor"
+          />
           {{ props.result.position }} place
         </div>
       </transition>
@@ -99,14 +102,14 @@ function onTransitionEnd() {
   background: #eee;
   border: 1px solid #ccc;
   margin-bottom: 10px;
-  overflow: hidden;
+  padding: 2px 15px;
 }
 
 .horse {
   position: absolute;
   left: 0;
-  top: 0;
-  height: 100%;
+  top: 4px;
+  height: calc(100% - 8px);
   display: flex;
   align-items: center;
   padding-left: 10px;
@@ -114,7 +117,8 @@ function onTransitionEnd() {
   font-weight: bold;
   color: white;
   border-radius: 0 20px 20px 0;
-  min-width: 100px;
+  min-width: 110px;
+  padding: 4px 10px;
 }
 
 .medal-pop-enter-active {

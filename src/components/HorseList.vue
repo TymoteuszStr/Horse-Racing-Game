@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Horse } from '@/types/horse'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faHorse } from '@fortawesome/free-solid-svg-icons'
+import HorseDisplay from '@/components/HorseDisplay.vue'
 
 defineProps<{
   horseList?: Horse[]
@@ -33,11 +32,7 @@ defineProps<{
         :key="horse.id"
         class="flex justify-between items-center px-3 py-2 rounded-lg transition-colors duration-150 hover:bg-gray-100"
       >
-        <span class="truncate text-gray-800 flex items-center gap-2">
-          <font-awesome-icon :icon="faHorse" class="w-5 h-5" :style="{ color: horse.color }" />
-          {{ horse.name }}
-        </span>
-
+        <HorseDisplay :horse="horse" />
         <span class="text-gray-800">{{ horse.conditionScore }}</span>
       </li>
     </ul>
