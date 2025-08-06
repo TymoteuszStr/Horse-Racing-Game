@@ -154,4 +154,10 @@ watch(
     transform: scale(1);
   }
 }
+
+@media (max-width: 639px) {
+  .horse {
+    min-width: 60px;
+  }
+}
 </style>

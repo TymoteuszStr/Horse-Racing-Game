@@ -58,4 +58,9 @@ watch(
   font-size: 20px;
   font-weight: bold;
 }
+@media (max-width: 639px) {
+  .race-board {
+    min-width: 100%;
+  }
+}
 </style>
