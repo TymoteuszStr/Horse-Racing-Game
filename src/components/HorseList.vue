@@ -9,18 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="p-4 w-full max-w-sm">
-    <div class="flex items-center justify-between mb-4 mx-3">
-      <h2 class="text-xl font-semibold">Horse List</h2>
-      <button
-        type="button"
-        :disabled="buttonDisabled"
-        @click="$emit('generate')"
-        class="px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded shadow transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Generate
-      </button>
-    </div>
+  <div class="p-4 w-full max-w-sm border rounded-xl shadow-sm bg-white min-w-[300px]">
     <div class="flex justify-between text-gray-500 text-sm font-semibold px-3 pb-2">
       <div>Horse</div>
       <div>Condition</div>

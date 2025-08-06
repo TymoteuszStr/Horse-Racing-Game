@@ -17,7 +17,7 @@ function onHorseFinished(result: RaceResult) {
 }
 </script>
 <template>
-  <div class="race-board">
+  <div class="race-board border rounded-xl shadow-sm bg-white">
     <h2 class="title">Round {{ raceRound.roundNumber }} – {{ raceRound.distance }}m</h2>
 
     <HorseTrack
@@ -36,9 +36,8 @@ function onHorseFinished(result: RaceResult) {
 .race-board {
   width: 100%;
   padding: 20px;
-  background: #f9f9f9;
-  border: 2px solid #aaa;
-  border-radius: 10px;
+  height: fit-content;
+  min-width: 600px;
 }
 
 .title {

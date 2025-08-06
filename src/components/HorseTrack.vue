@@ -80,7 +80,7 @@ function onTransitionEnd() {
       <transition name="medal-pop">
         <div
           v-if="isFinished"
-          class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full bg-white shadow-md flex items-center gap-2 font-bold text-sm"
+          class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full bg-white shadow-md flex items-center gap-2 font-bold text-sm min-w-[100px] flex justify-center"
         >
           <font-awesome-icon
             v-if="props.result.position && props.result.position <= 3"
