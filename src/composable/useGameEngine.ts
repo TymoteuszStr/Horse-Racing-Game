@@ -43,10 +43,7 @@ export function useGameEngine() {
         horses: selectedHorses,
       }
     })
-    schedule.forEach((round) => {
-      const result = simulateRace(round)
-      console.log(`Round ${round.roundNumber} results:`, result)
-    })
+    simulateRace(schedule[0])
     store.commit('setRaceSchedule', schedule)
   }
   function simulateRace(race: RaceRound): RaceResult[] {
@@ -63,12 +60,12 @@ export function useGameEngine() {
         position: 0,
       }
     })
-
-    results.sort((a, b) => a.time - b.time)
-
-    results.forEach((result, index) => {
-      result.position = index + 1
+    const resultMap = new Map(results.map((r) => [r.horse.id, r]))
+    const sortedByTime = [...results].sort((a, b) => a.time - b.time)
+    sortedByTime.forEach((sortedResult, index) => {
+      resultMap.get(sortedResult.horse.id)!.position = index + 1
     })
+    store.commit('setRaceResults', results)
 
     return results
   }

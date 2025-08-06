@@ -4,7 +4,7 @@ const horseColors: string[] = [
   'green',
   'orange',
   'purple',
-  'yellow',
+  'darkkhaki',
   'cyan',
   'magenta',
   'lime',
