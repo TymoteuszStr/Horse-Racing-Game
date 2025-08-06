@@ -10,11 +10,7 @@ defineProps<{
 }>()
 </script>
 <template>
-  <ExpandableCard
-    :results="results"
-    :title="`${round.roundNumber} – ${round.distance}m`"
-    :initialExpanded="false"
-  >
+  <ExpandableCard :title="`${round.roundNumber + 1} – ${round.distance}m`" :initialExpanded="false">
     <ResultRoundItem :round="round" :results="results" />
   </ExpandableCard>
 </template>

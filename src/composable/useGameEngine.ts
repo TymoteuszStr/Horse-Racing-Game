@@ -11,7 +11,6 @@ import type { RaceResult } from '@/types/RaceResult'
 
 export function useGameEngine() {
   const store = useStore()
-  const isGameStarted = false
 
   function generateHorseList() {
     const shuffledHorseNames = shuffleArray(horseNames)
@@ -22,6 +21,7 @@ export function useGameEngine() {
       color: shuffledHorseColors[index],
       conditionScore: getRandomNr(80, 100),
     }))
+    store.commit('resetRaceResults')
     store.commit('setHorseList', horses)
     generateRaceSchedule()
   }
@@ -38,12 +38,11 @@ export function useGameEngine() {
       const selectedHorses = shuffled.slice(0, 10)
 
       return {
-        roundNumber: index + 1,
+        roundNumber: index,
         distance,
         horses: selectedHorses,
       }
     })
-    simulateRace(schedule[0])
     store.commit('setRaceSchedule', schedule)
   }
   function simulateRace(race: RaceRound): RaceResult[] {
@@ -65,9 +64,10 @@ export function useGameEngine() {
     sortedByTime.forEach((sortedResult, index) => {
       resultMap.get(sortedResult.horse.id)!.position = index + 1
     })
-    store.commit('setRaceResults', results)
+
+    store.commit('setRaceResults', { roundNumber: race.roundNumber, results })
 
     return results
   }
-  return { generateHorseList, isGameStarted, generateRaceSchedule, simulateRace }
+  return { generateHorseList, generateRaceSchedule, simulateRace }
 }

@@ -9,8 +9,7 @@ defineProps<{
 </script>
 <template>
   <ExpandableCard
-    :key="scheduleRound.roundNumber"
-    :title="`${scheduleRound.roundNumber} – ${scheduleRound.distance}m`"
+    :title="`${scheduleRound.roundNumber + 1} – ${scheduleRound.distance}m`"
     :initialExpanded="false"
   >
     <RaceRoundItem :round="scheduleRound" />
