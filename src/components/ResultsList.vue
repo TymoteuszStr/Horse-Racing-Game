@@ -2,7 +2,7 @@
 import ExpandableCard from '@/layouts/ExpandableCard.vue'
 import type { RaceResult } from '@/types/RaceResult'
 import type { RaceRound } from '@/types/RaceRound'
-import ResultRoundItem from './ResultRoundItem.vue'
+import RaceResultList from '@/components/RaceResultList.vue'
 
 defineProps<{
   results: RaceResult[]
@@ -11,6 +11,6 @@ defineProps<{
 </script>
 <template>
   <ExpandableCard :title="`${round.roundNumber + 1} – ${round.distance}m`" :initialExpanded="false">
-    <ResultRoundItem :round="round" :results="results" />
+    <RaceResultList :round="round" :results="results" />
   </ExpandableCard>
 </template>

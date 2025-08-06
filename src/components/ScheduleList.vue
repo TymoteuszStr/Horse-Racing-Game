@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { RaceRound } from '@/types/RaceRound'
-import RaceRoundItem from '@/components/RaceRoundItem.vue'
+import RaceRoundHorseList from '@/components/RaceRoundHorseList.vue'
 import ExpandableCard from '@/layouts/ExpandableCard.vue'
 
 defineProps<{
@@ -12,6 +12,6 @@ defineProps<{
     :title="`${scheduleRound.roundNumber + 1} – ${scheduleRound.distance}m`"
     :initialExpanded="false"
   >
-    <RaceRoundItem :round="scheduleRound" />
+    <RaceRoundHorseList :round="scheduleRound" />
   </ExpandableCard>
 </template>
