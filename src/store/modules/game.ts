@@ -44,10 +44,10 @@ const mutations = {
   setRaceSchedule(state: GameState, schedule: RaceRound[]) {
     state.raceSchedule = schedule
   },
-  updateHorseCondition(state: GameState, payload: { id: number; conditionScore: number }) {
+  updateHorseCondition(state: GameState, payload: { id: number; scoreLoss: number }) {
     const horse = state.horseList.find((h) => h.id === payload.id)
     if (horse) {
-      horse.conditionScore = payload.conditionScore
+      horse.conditionScore -= payload.scoreLoss
     }
   },
 }

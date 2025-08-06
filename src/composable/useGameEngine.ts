@@ -5,7 +5,7 @@ import { getRandomNr } from '@/utils.ts/getRandomNr'
 import type { Horse } from '@/types/horse'
 import { shuffleArray } from '@/utils.ts/shuffleArray'
 import raceDistances from '@/constants/raceDistances'
-import { AVERAGE_HORSE_SPEED_MPS } from '@/constants/raceConfig'
+import { AVERAGE_HORSE_SPEED_MPS, HORSES_PER_RACE, MAX_HORSES } from '@/constants/raceConfig'
 import type { RaceRound } from '@/types/RaceRound'
 import type { RaceResult } from '@/types/RaceResult'
 
@@ -13,6 +13,10 @@ export function useGameEngine() {
   const store = useStore()
 
   function generateHorseList() {
+    if (horseNames.length < MAX_HORSES || horseColors.length < MAX_HORSES) {
+      console.warn('Not enough horse names or colors to generate a full list.')
+      return
+    }
     const shuffledHorseNames = shuffleArray(horseNames)
     const shuffledHorseColors = shuffleArray(horseColors)
     const horses: Horse[] = shuffledHorseNames.map((name, index) => ({
@@ -28,14 +32,14 @@ export function useGameEngine() {
   function generateRaceSchedule() {
     const horseList = store.getters.horseList as Horse[]
 
-    if (horseList.length < 10) {
+    if (horseList.length < HORSES_PER_RACE) {
       console.warn('Not enough horses to generate a race schedule.')
       return
     }
 
     const schedule = raceDistances.map((distance, index) => {
       const shuffled = shuffleArray(horseList)
-      const selectedHorses = shuffled.slice(0, 10)
+      const selectedHorses = shuffled.slice(0, HORSES_PER_RACE)
 
       return {
         roundNumber: index,
