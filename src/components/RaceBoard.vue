@@ -50,7 +50,7 @@ watch(
   width: 100%;
   padding: 20px;
   height: fit-content;
-  min-width: 600px;
+  min-width: 550px;
 }
 
 .title {

@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <ul class="space-y-1 transition-all duration-300">
+  <ul>
     <li
       v-for="horse in round.horses"
       :key="horse.id"

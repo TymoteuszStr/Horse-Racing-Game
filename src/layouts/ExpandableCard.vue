@@ -15,8 +15,8 @@ const expanded = ref(props.initialExpanded)
 </script>
 
 <template>
-  <li
-    class="inline-block w-fit p-4 border rounded-xl shadow-sm bg-white transition-all duration-300 cursor-pointer select-none min-w-[250px]"
+  <div
+    class="block w-fit p-4 border rounded-xl shadow-sm bg-white transition-all duration-300 cursor-pointer select-none min-w-[250px]"
     @click="expanded = !expanded"
   >
     <div class="mb-2 text-gray-700 font-medium flex justify-between items-center">
@@ -31,7 +31,7 @@ const expanded = ref(props.initialExpanded)
         <slot />
       </div>
     </transition>
-  </li>
+  </div>
 </template>
 
 <style scoped>

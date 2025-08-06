@@ -10,7 +10,7 @@ const sortedResults = computed(() => [...props.results].sort((a, b) => a.positio
 </script>
 
 <template>
-  <ul class="space-y-1 transition-all duration-300">
+  <ul>
     <li
       v-for="result in sortedResults"
       :key="result.horse.id"
