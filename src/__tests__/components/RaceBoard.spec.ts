@@ -5,7 +5,6 @@ import type { RaceRound } from '@/types/RaceRound'
 import type { RaceResult } from '@/types/RaceResult'
 import type { Horse } from '@/types/horse'
 
-// Mock HorseTrack component
 vi.mock('@/components/HorseTrack.vue', () => ({
   default: {
     name: 'HorseTrack',
@@ -96,7 +95,6 @@ describe('RaceBoard', () => {
       },
     })
 
-    // Simulate all horses finishing
     const horseTracks = wrapper.findAll('.horse-track')
     for (const track of horseTracks) {
       await track.trigger('click')
@@ -172,11 +170,9 @@ describe('RaceBoard', () => {
       },
     })
 
-    // Simulate one horse finishing
     const firstTrack = wrapper.find('.horse-track')
     await firstTrack.trigger('click')
 
-    // Change round number
     await wrapper.setProps({
       results: mockResults,
       raceRound: {
@@ -185,7 +181,6 @@ describe('RaceBoard', () => {
       },
     })
 
-    // Should not emit allFinished until all horses finish again
     expect(wrapper.emitted('allFinished')).toBeFalsy()
   })
 

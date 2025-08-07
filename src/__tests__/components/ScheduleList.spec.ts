@@ -4,7 +4,6 @@ import ScheduleList from '@/components/ScheduleList.vue'
 import type { RaceRound } from '@/types/RaceRound'
 import type { Horse } from '@/types/horse'
 
-// Mock dependencies
 vi.mock('@/components/RaceRoundHorseList.vue', () => ({
   default: {
     name: 'RaceRoundHorseList',

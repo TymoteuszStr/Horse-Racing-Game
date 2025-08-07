@@ -4,13 +4,12 @@ import RaceResultList from '@/components/RaceResultList.vue'
 import type { RaceResult } from '@/types/RaceResult'
 import type { Horse } from '@/types/horse'
 
-// Mock HorseDisplay component
 vi.mock('@/components/HorseDisplay.vue', () => ({
   default: {
     name: 'HorseDisplay',
     props: ['horse'],
-    template: '<div class="horse-display">{{ horse.name }}</div>'
-  }
+    template: '<div class="horse-display">{{ horse.name }}</div>',
+  },
 }))
 
 describe('RaceResultList', () => {
@@ -19,51 +18,50 @@ describe('RaceResultList', () => {
       id: 1,
       name: 'Barbara',
       color: 'red',
-      conditionScore: 90
+      conditionScore: 90,
     },
     {
       id: 2,
       name: 'Ada',
       color: 'blue',
-      conditionScore: 85
+      conditionScore: 85,
     },
     {
       id: 3,
       name: 'Grace',
       color: 'green',
-      conditionScore: 88
-    }
+      conditionScore: 88,
+    },
   ]
 
   const mockResults: RaceResult[] = [
     {
       horse: mockHorses[1],
       time: 13.5,
-      position: 2
+      position: 2,
     },
     {
       horse: mockHorses[0],
       time: 12.8,
-      position: 1
+      position: 1,
     },
     {
       horse: mockHorses[2],
       time: 14.2,
-      position: 3
-    }
+      position: 3,
+    },
   ]
 
   it('renders race results in correct order (sorted by position)', () => {
     const wrapper = mount(RaceResultList, {
       props: {
-        results: mockResults
-      }
+        results: mockResults,
+      },
     })
 
     const positions = wrapper.findAll('.w-8')
     expect(positions).toHaveLength(3)
-    
-    // Check that positions are displayed in order
+
     expect(positions[0].text()).toBe('1.')
     expect(positions[1].text()).toBe('2.')
     expect(positions[2].text()).toBe('3.')
@@ -72,8 +70,8 @@ describe('RaceResultList', () => {
   it('displays horse names correctly', () => {
     const wrapper = mount(RaceResultList, {
       props: {
-        results: mockResults
-      }
+        results: mockResults,
+      },
     })
 
     expect(wrapper.text()).toContain('Barbara')
@@ -84,8 +82,8 @@ describe('RaceResultList', () => {
   it('displays race times correctly', () => {
     const wrapper = mount(RaceResultList, {
       props: {
-        results: mockResults
-      }
+        results: mockResults,
+      },
     })
 
     expect(wrapper.text()).toContain('12.80s')
@@ -96,8 +94,8 @@ describe('RaceResultList', () => {
   it('renders empty list when no results provided', () => {
     const wrapper = mount(RaceResultList, {
       props: {
-        results: []
-      }
+        results: [],
+      },
     })
 
     expect(wrapper.find('li').exists()).toBe(false)
@@ -106,12 +104,12 @@ describe('RaceResultList', () => {
   it('applies correct CSS classes to list items', () => {
     const wrapper = mount(RaceResultList, {
       props: {
-        results: mockResults
-      }
+        results: mockResults,
+      },
     })
 
     const listItems = wrapper.findAll('li')
-    listItems.forEach(item => {
+    listItems.forEach((item) => {
       expect(item.classes()).toContain('flex')
       expect(item.classes()).toContain('items-center')
       expect(item.classes()).toContain('justify-between')
@@ -127,12 +125,12 @@ describe('RaceResultList', () => {
   it('displays position numbers with correct styling', () => {
     const wrapper = mount(RaceResultList, {
       props: {
-        results: mockResults
-      }
+        results: mockResults,
+      },
     })
 
     const positionDivs = wrapper.findAll('.w-8')
-    positionDivs.forEach(div => {
+    positionDivs.forEach((div) => {
       expect(div.classes()).toContain('h-8')
       expect(div.classes()).toContain('flex')
       expect(div.classes()).toContain('items-center')
@@ -151,24 +149,24 @@ describe('RaceResultList', () => {
       {
         horse: mockHorses[2],
         time: 14.2,
-        position: 3
+        position: 3,
       },
       {
         horse: mockHorses[0],
         time: 12.8,
-        position: 1
+        position: 1,
       },
       {
         horse: mockHorses[1],
         time: 13.5,
-        position: 2
-      }
+        position: 2,
+      },
     ]
 
     const wrapper = mount(RaceResultList, {
       props: {
-        results: unsortedResults
-      }
+        results: unsortedResults,
+      },
     })
 
     const positions = wrapper.findAll('.w-8')

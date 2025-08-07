@@ -4,7 +4,6 @@ import RaceRoundHorseList from '@/components/RaceRoundHorseList.vue'
 import type { RaceRound } from '@/types/RaceRound'
 import type { Horse } from '@/types/horse'
 
-// Mock HorseDisplay component
 vi.mock('@/components/HorseDisplay.vue', () => ({
   default: {
     name: 'HorseDisplay',

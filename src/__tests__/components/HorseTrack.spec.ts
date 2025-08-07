@@ -2,9 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import HorseTrack from '@/components/HorseTrack.vue'
 import type { Horse } from '@/types/horse'
-import type { RaceResult } from '@/types/RaceResult'
 
-// Mock dependencies
 vi.mock('@fortawesome/vue-fontawesome', () => ({
   FontAwesomeIcon: {
     name: 'FontAwesomeIcon',
@@ -28,7 +26,6 @@ vi.mock('vuex', () => ({
   })),
 }))
 
-// Mock requestAnimationFrame
 global.requestAnimationFrame = vi.fn((cb) => {
   cb()
   return 1
@@ -40,12 +37,6 @@ describe('HorseTrack', () => {
     name: 'Barbara',
     color: 'red',
     conditionScore: 90,
-  }
-
-  const mockResult: RaceResult = {
-    horse: mockHorse,
-    time: 12.8,
-    position: 1,
   }
 
   beforeEach(() => {

@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils'
 import HorseList from '@/components/HorseList.vue'
 import type { Horse } from '@/types/horse'
 
-// Mock HorseDisplay component
 vi.mock('@/components/HorseDisplay.vue', () => ({
   default: {
     name: 'HorseDisplay',

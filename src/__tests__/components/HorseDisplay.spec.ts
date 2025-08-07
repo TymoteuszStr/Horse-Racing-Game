@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils'
 import HorseDisplay from '@/components/HorseDisplay.vue'
 import type { Horse } from '@/types/horse'
 
-// Mock FontAwesome
 vi.mock('@fortawesome/vue-fontawesome', () => ({
   FontAwesomeIcon: {
     name: 'FontAwesomeIcon',

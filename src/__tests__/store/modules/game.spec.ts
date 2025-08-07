@@ -152,7 +152,6 @@ describe('Game Store Module', () => {
 
     describe('resetRaceResults', () => {
       it('should clear all race results', () => {
-        // First set some results
         const results: RaceResult[] = [
           {
             horse: {
@@ -169,7 +168,6 @@ describe('Game Store Module', () => {
         module.mutations!.setRaceResults(state, { roundNumber: 1, results })
         expect(state.raceResults[1]).toEqual(results)
 
-        // Then reset
         module.mutations!.resetRaceResults(state)
         expect(state.raceResults).toEqual({})
       })
