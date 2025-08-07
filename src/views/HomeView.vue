@@ -9,41 +9,45 @@ import RaceBoard from '@/components/RaceBoard.vue'
 import ResultsList from '@/components/ResultsList.vue'
 import { RACE_ROUNDS } from '@/constants/raceConfig'
 
-const { generateHorseList, simulateRace } = useGameEngine()
 const store = useStore()
+const { generateHorseList, simulateRace, generateRaceSchedule } = useGameEngine()
 const horseList = computed(() => store.getters.horseList)
 const isRaceStarted = computed(() => store.getters.isRaceStarted)
 const raceSchedule = computed(() => store.getters.raceSchedule)
 const raceResults = computed(() => store.getters.raceResults)
-const showNextRoundBtn = ref(false)
 const currentRound = computed(() => store.getters.currentRound)
-const finishBtn = ref(false)
 const disabledStartBtn = computed(
   () =>
     isRaceStarted.value ||
-    showNextRoundBtn.value ||
+    isRaceFinished.value ||
     raceSchedule.value.length === 0 ||
     currentRound.value + 1 > RACE_ROUNDS,
 )
 const disabledNextRaceBtn = computed(
-  () => isRaceStarted.value || !showNextRoundBtn.value || currentRound.value + 1 >= RACE_ROUNDS,
+  () => isRaceStarted.value || !isRaceFinished.value || currentRound.value + 1 >= RACE_ROUNDS,
 )
+const isRaceFinished = ref(false)
+const finishBtn = ref(false)
+
 function startRace() {
   if (disabledStartBtn.value) return
   simulateRace(raceSchedule.value[currentRound.value])
   store.commit('setRaceStarted', true)
 }
+
 function handleFinishedRace() {
   updateHorsesCondition()
   store.commit('setRaceStarted', false)
-  showNextRoundBtn.value = true
+  isRaceFinished.value = true
   if (currentRound.value === RACE_ROUNDS - 1) finishBtn.value = true
 }
+
 function handleNextRound() {
   if (disabledNextRaceBtn.value) return
   store.commit('incrementCurrentRound')
-  showNextRoundBtn.value = false
+  isRaceFinished.value = false
 }
+
 function updateHorsesCondition() {
   const currentRoundObj = raceSchedule.value[currentRound.value]
 
@@ -54,17 +58,18 @@ function updateHorsesCondition() {
     })
   })
 }
-function handleGenerateHorseList() {
+function generateHorseListAndSchedule() {
   finishBtn.value = false
-  showNextRoundBtn.value = false
+  isRaceFinished.value = false
   store.commit('setRaceStarted', false)
   store.commit('setCurrentRound', 0)
 
   generateHorseList()
+  generateRaceSchedule()
 }
 onMounted(() => {
-  if (!horseList.value.length) {
-    generateHorseList()
+  if (!horseList.value.length || !raceSchedule.value.length) {
+    generateHorseListAndSchedule()
   }
 })
 </script>
@@ -77,7 +82,7 @@ onMounted(() => {
         <button
           type="button"
           :disabled="isRaceStarted"
-          @click="handleGenerateHorseList"
+          @click="generateHorseListAndSchedule"
           class="px-3 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded shadow transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Generate

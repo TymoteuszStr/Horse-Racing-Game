@@ -1,9 +1,9 @@
 import { useStore } from 'vuex'
 import horseNames from '@/constants/horseNames'
 import horseColors from '@/constants/horseColors'
-import { getRandomNr } from '@/utils.ts/getRandomNr'
+import { getRandomNr } from '@/utils/getRandomNr'
 import type { Horse } from '@/types/horse'
-import { shuffleArray } from '@/utils.ts/shuffleArray'
+import { shuffleArray } from '@/utils/shuffleArray'
 import raceDistances from '@/constants/raceDistances'
 import { AVERAGE_HORSE_SPEED_MPS, HORSES_PER_RACE, MAX_HORSES } from '@/constants/raceConfig'
 import type { RaceRound } from '@/types/RaceRound'
@@ -19,16 +19,18 @@ export function useGameEngine() {
     }
     const shuffledHorseNames = shuffleArray(horseNames)
     const shuffledHorseColors = shuffleArray(horseColors)
-    const horses: Horse[] = shuffledHorseNames.map((name, index) => ({
+
+    const horses: Horse[] = shuffledHorseNames.slice(0, MAX_HORSES).map((name, index) => ({
       id: index + 1,
       name,
       color: shuffledHorseColors[index],
       conditionScore: getRandomNr(80, 100),
     }))
+
     store.commit('resetRaceResults')
     store.commit('setHorseList', horses)
-    generateRaceSchedule()
   }
+
   function generateRaceSchedule() {
     const horseList = store.getters.horseList as Horse[]
 
@@ -63,10 +65,14 @@ export function useGameEngine() {
         position: 0,
       }
     })
-    const resultMap = new Map(results.map((r) => [r.horse.id, r]))
+    const resultMap = new Map(results.map((result) => [result.horse.id, result]))
     const sortedByTime = [...results].sort((a, b) => a.time - b.time)
     sortedByTime.forEach((sortedResult, index) => {
-      resultMap.get(sortedResult.horse.id)!.position = index + 1
+      const result = resultMap.get(sortedResult.horse.id)
+      if (!result) {
+        throw new Error(`Result not found for horse ID ${sortedResult.horse.id}`)
+      }
+      result.position = index + 1
     })
 
     store.commit('setRaceResults', { roundNumber: race.roundNumber, results })
