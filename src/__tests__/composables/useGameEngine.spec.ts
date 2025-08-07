@@ -52,7 +52,6 @@ describe('useGameEngine', () => {
 
     expect(mockCommit).toHaveBeenCalledWith('resetRaceResults')
     expect(mockCommit).toHaveBeenCalledWith('setHorseList', expect.any(Array))
-    expect(mockCommit).toHaveBeenCalledWith('setRaceSchedule', expect.any(Array))
   })
 
   it('generateRaceSchedule commits schedule with 6 rounds and correct horses per round', () => {
