@@ -99,13 +99,14 @@ onMounted(() => {
         v-for="round in raceSchedule"
         :key="round.roundNumber"
         :scheduleRound="round"
+        :expand-list="round.roundNumber === currentRound"
         class="mb-4"
       />
     </div>
     <div v-if="raceSchedule.length" class="mx-3">
       <div class="flex items-center justify-between m-4">
         <h2 class="text-xl font-semibold">Race Board</h2>
-        <h2 v-if="finishBtn" class="text-2xl font-bold text-green-600 animate-pulse">
+        <h2 v-if="finishBtn" class="text-m font-bold text-green-600 animate-pulse">
           ALL RACES FINISHED
         </h2>
 
@@ -141,7 +142,12 @@ onMounted(() => {
         <h2 class="text-xl font-semibold">Race Results</h2>
       </div>
       <template v-for="round in raceSchedule" :key="round.roundNumber">
-        <ResultsList :results="raceResults[round.roundNumber] || []" :round="round" class="mb-4" />
+        <ResultsList
+          :results="raceResults[round.roundNumber] || []"
+          :round="round"
+          class="mb-4"
+          :expand-list="round.roundNumber === currentRound && isRaceFinished"
+        />
       </template>
     </div>
   </div>

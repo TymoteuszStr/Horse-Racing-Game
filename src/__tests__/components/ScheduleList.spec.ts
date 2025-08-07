@@ -15,7 +15,7 @@ vi.mock('@/components/RaceRoundHorseList.vue', () => ({
 vi.mock('@/layouts/ExpandableCard.vue', () => ({
   default: {
     name: 'ExpandableCard',
-    props: ['title', 'initialExpanded'],
+    props: ['title', 'expanded'],
     template: '<div class="expandable-card"><div class="title">{{ title }}</div><slot /></div>',
   },
 }))
@@ -91,7 +91,7 @@ describe('ScheduleList', () => {
     expect(wrapper.text()).toContain('1 – 1000m')
   })
 
-  it('renders with initialExpanded set to false', () => {
+  it('renders with expanded set to false', () => {
     const wrapper = mount(ScheduleList, {
       props: {
         scheduleRound: mockScheduleRound,

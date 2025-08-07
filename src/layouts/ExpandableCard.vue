@@ -1,33 +1,39 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = withDefaults(
   defineProps<{
     title: string
-    initialExpanded?: boolean
+    expanded?: boolean
   }>(),
   {
-    initialExpanded: false,
+    expanded: false,
   },
 )
 
-const expanded = ref(props.initialExpanded)
+const isExpanded = ref(props.expanded)
+watch(
+  () => props.expanded,
+  (newVal) => {
+    isExpanded.value = newVal
+  },
+)
 </script>
 
 <template>
   <div
     class="block w-fit p-4 border rounded-xl shadow-sm bg-white transition-all duration-300 cursor-pointer select-none min-w-[250px]"
-    @click="expanded = !expanded"
+    @click="isExpanded = !isExpanded"
   >
     <div class="mb-2 text-gray-700 font-medium flex justify-between items-center">
       <span>{{ props.title }}</span>
       <span class="text-sm text-gray-400">
-        {{ expanded ? '▲' : '▼' }}
+        {{ isExpanded ? '▲' : '▼' }}
       </span>
     </div>
 
     <transition name="expand">
-      <div v-if="expanded" class="transition-all duration-300 flex justify-center items-center">
+      <div v-if="isExpanded" class="transition-all duration-300 flex justify-center items-center">
         <slot />
       </div>
     </transition>
